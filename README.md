@@ -21,3 +21,8 @@ Passing the Parameter "can_starts_with_number=True", you can verify e-mails that
     >> email.syntax_validation('24hours_laundry@gmail.com', can_starts_with_number=True)
     >> True
     
+ ## Extract Emails from a text
+ To remove all emails from a text, use extract_emails_from_text():
+    
+    >> validator.extract_emails_from_text('lorsi sldaljq indajfa email@example.com sajdiosafhu. A example@email.com')
+    >> ['email@example.com', 'example@email.com']

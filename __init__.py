@@ -23,6 +23,18 @@ class EmailTools:
             return re.compile(regex)
 
     def syntax_validation(self, email_parameter=None, can_starts_with_number=False):
+        """
+        A function to verify if the syntax of an email is valid. True is an email with syntax valid, and False an email
+        with syntax invalid.
+
+        To enable verification to emails that start with number, use can_starts_with_number=True  ...
+        To disable this feature, use False instead.
+
+        :param email_parameter: String
+        :param can_starts_with_number: Bool
+        :raise ValueError: Raises if any email isn't pass
+        :return: Bool
+        """
 
         if email_parameter is None:
             raise ValueError('You must pass an email as a STRING parameter in the function syntax_validation()')
@@ -36,7 +48,14 @@ class EmailTools:
         else:
             return True
 
-    def extract_emails_from_text(self, text=None, can_starts_with_number=False):
+    def extract_emails_from_text(self, text=None):
+
+        """
+        A method to remove all emails from a text.
+
+        :param text: String
+        :return: List
+        """
 
         compiler = re.compile(self.regex_simple)
 
@@ -48,5 +67,7 @@ class EmailTools:
             return match_result
 
     def extract_emails_from_web(self, url=None):
+
+        # Will be implemented in the future
         pass
 
