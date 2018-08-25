@@ -22,6 +22,9 @@ class EmailTools:
 
             return re.compile(regex)
 
+        else:
+            raise KeyError('"can_starts_with_number" only receives False or True')
+
     def syntax_validation(self, email_parameter=None, can_starts_with_number=False):
         """
         A function to verify if the syntax of an email is valid. True is an email with syntax valid, and False an email
@@ -51,7 +54,8 @@ class EmailTools:
     def extract_emails_from_text(self, text=None):
 
         """
-        A method to remove all emails from a text.
+        A method to remove all emails from a text. If any email can be extracted from the text passed, a empty list will
+        be returned. Another way, all emails will be returned in a list.
 
         :param text: String
         :return: List
@@ -61,10 +65,7 @@ class EmailTools:
 
         match_result = compiler.findall(text)
 
-        if match_result == []:
-            return False
-        else:
-            return match_result
+        return match_result
 
     def extract_emails_from_web(self, url=None):
 
