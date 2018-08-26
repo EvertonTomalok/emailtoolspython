@@ -1,6 +1,8 @@
+
 """
 Python module for help working with Emails.
 """
+
 __author__ = 'Everton Tomalok'
 __version__ = '0.0.3'
 __email__ = 'evertontomalok123@gmail.com'
@@ -85,7 +87,7 @@ class EmailTools:
     def extract_emails_from_text(self, text=None):
 
         """
-        A method to remove all emails from a text. If any email can be extracted from the text passed, a empty list will
+        A method to extract all emails from a text. If any email can be extracted from the text passed, a empty list will
         be returned. Another way, all emails will be returned in a list.
 
         :param text: String
@@ -100,7 +102,7 @@ class EmailTools:
 
     def extract_emails_from_web(self, url):
         """
-        An url must be passed, as this exemplo: "google.com" or "www.google.com"
+        An url must be passed, as this example: "google.com" or "www.google.com"
         After processing the request, all emails of that page will be extracted, and returned in a list.
         If any email could be found, an empty list will be returned.
 
