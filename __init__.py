@@ -1,3 +1,10 @@
+"""
+Python module for help working with Emails.
+"""
+__author__ = 'Everton Tomalok'
+__version__ = '0.0.3'
+__email__ = 'evertontomalok123@gmail.com'
+
 import re
 import requests
 from bs4 import BeautifulSoup

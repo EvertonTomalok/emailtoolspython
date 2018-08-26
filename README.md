@@ -26,7 +26,7 @@ Passing the Parameter "can_starts_with_number=True", you can verify e-mails that
 <br>
     
  ## Extracting Emails from a text
-To remove all emails from a text, use extract_emails_from_text():
+To extract all emails from a text, use extract_emails_from_text():
     
     >> validator.extract_emails_from_text('lorsi sldaljq indajfa email@example.com sajdiosafhu. A example@email.com')
     >> ['email@example.com', 'example@email.com']
@@ -39,3 +39,10 @@ Note, a domain must be passed like this: "creditas.com.br" or "www.creditas.com.
 
     >> email.extract_emails_from_web('creditas.com.br')
     >> ['meajuda@creditas.com.br', 'ouvidoria@creditas.com.br', 'imprensa@creditas.com.br']
+<br>
+
+# Author
+{
+<br>'name': Everton Tomalok,<br>
+'email': evertontomalok123@gmail.com<br>
+}
