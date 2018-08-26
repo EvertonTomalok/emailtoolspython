@@ -6,6 +6,7 @@ Python module for help working with Emails.
 __author__ = 'Everton Tomalok'
 __version__ = '1.0.0'
 __email__ = 'evertontomalok123@gmail.com'
+name = 'emailtoolspython'
 
 import re
 import requests
