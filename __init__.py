@@ -4,7 +4,7 @@ Python module for help working with Emails.
 """
 
 __author__ = 'Everton Tomalok'
-__version__ = '0.0.3'
+__version__ = '1.0.0'
 __email__ = 'evertontomalok123@gmail.com'
 
 import re
@@ -16,11 +16,12 @@ from .util.agents import choice_one_user_agent
 class EmailTools:
 
     def __init__(self):
-        self.regex_simple = r'[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+\.?[a-zA-Z0-9-.]{0,2}'
+        self.regex_simple = r'\s?[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+\.?[a-zA-Z0-9-.]{0,2}\s?'
 
     @classmethod
     def _make_compiler(cls, can=False):
 
+        # using another base_regex, different of the self.regex_simple
         base_regex = r'(\.[a-za-z0-9-_]+)*@[a-z0-9-]+\.([a-z0-9-]+)*(\.[a-z0-9-]+)*$'
 
         if not can:
@@ -48,7 +49,7 @@ class EmailTools:
             ua = choice_one_user_agent()
             headers['User-Agent'] = ua
 
-        # Preparing URL, and make two requests. One to https and other to http
+        # Preparing URL, and make two requests, if the first is failed. One to https and other to http
         try:
 
             req = requests.get('https://%s'% url, headers=headers)
@@ -57,6 +58,10 @@ class EmailTools:
             req = requests.get('http://%s' % url, headers=headers)
 
         return req.content
+
+    @property
+    def base_regex(self):
+        return self.regex_simple
 
     def syntax_validation(self, email_parameter=None, can_starts_with_number=False):
         """
@@ -84,7 +89,7 @@ class EmailTools:
         else:
             return True
 
-    def extract_emails_from_text(self, text=None):
+    def extract_emails_from_text(self, text):
 
         """
         A method to extract all emails from a text. If any email can be extracted from the text passed, a empty list will
@@ -94,18 +99,26 @@ class EmailTools:
         :return: List
         """
 
-        compiler = re.compile(self.regex_simple)
+        compiler = re.compile(self.base_regex)
 
         match_result = compiler.findall(text)
 
+        match_result = [email.strip() for email in match_result]
+
         return match_result
 
-    def extract_emails_from_web(self, url, user_agent=False):
+    def extract_emails_from_web(self, url, user_agent=False, clean_end=[]):
+
         """
-        An url must be passed, as this example: "google.com" or "www.google.com"
+        An url must be passed, like this example: "google.com" or "www.google.com"
         After processing the request, all emails of that page will be extracted, and returned in a list.
         If any email could be found, an empty list will be returned.
-        You can pass user_agent=True, to use an user agent in Header of the request.
+        You can "pass user_agent=True", to use an user agent in Header of the request.
+        In order to pre processing your email, you can pass a list of 'strings' to be cleaned in email. For example,
+        if one email is email@domain.com.netPhrase, you can use clean_end=['.net']. It's very recommended you use '.com'
+        in the last position of the array, because if the same email "email@domain.com.netPhrase", if you use
+        clean_end=['.com','.net'], your email returned will be "email@domain.com", not "email@domain.com.net" as it must
+        to be.
 
         :param url: String
         :param user_agent: Bool
@@ -121,8 +134,10 @@ class EmailTools:
 
         for email in emails_dirty:
 
-            if '.br' in email:
-                email = email.split('.br')[0] + '.br'
+            if clean_end != []:
+                for item in clean_end:
+                    if item in email:
+                        email = email.split(item)[0] + item
 
             if email not in emails:
                 emails.append(email)

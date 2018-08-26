@@ -44,6 +44,29 @@ Note, a domain must be passed like this: "creditas.com.br" or "www.creditas.com.
 Use parameter "user_agent=True" to choice a random user agent to be used in the request
     
     >> email.extract_emails_from_web('urlexample.com', user_agent=True)
+    
+Pass a list of strings, of possibilities of end domains, if you need to clean emails crawleds from a web site.<br>
+For example, a know my emails extracted from web site, will end with .br, I can pass "clean_end=['.br']". 
+
+    >> email.extract_emails_from_web('lendico.com.br', user_agent=True)
+    >> ['atendimento@lendico.com.br.leia']
+
+    >> email.extract_emails_from_web('lendico.com.br', user_agent=True, clean_end=['.br'])
+    >> ['atendimento@lendico.com.br']
+
+<br>
+It's very recommended pass '.com' as the last position in the list, because if the email finishes with other element
+different of '.com', probably the email returned not will be the expected.<br>
+For example, "email@domain.com.netPhrase", if you use "clean_end=['.com','.net']", your email returned will be "email@domain.com", 
+not "email@domain.com.net" as it must to be. To avoid this, use "clean_end=['.net', '.com']", or the items you need.
+
+    >> email.extract_emails_from_web('someurl.com', "clean_end=['.net', '.br', '.ar', '.us', '.com']")
+    >> "email@domain.com.net" # The email returned in the method "extract_emails_from_web()", 
+                              # it was "email@domain.com.netPhrase", and after pre processing it was this result.
+
+    # Avoid using this:
+    >> email.extract_emails_from_web('someurl.com', "clean_end=['.com', '.net']")
+    >> "email@domain.com" # The email returned was not what probably you were expecting.
 
 # Author
 {
