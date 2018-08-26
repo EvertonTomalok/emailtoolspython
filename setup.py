@@ -1,8 +1,8 @@
-from distutils.core import setup
+from setuptools import setup, find_packages
 
 setup(
     name='emailtoolspython',
-    packages=['emailtoolspython'],
+    packages=find_packages(),
     version='1.0.0',
     author="Everton Tomalok",
     author_email="evertontomalok123@gmail.com",
