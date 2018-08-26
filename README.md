@@ -41,6 +41,10 @@ Note, a domain must be passed like this: "creditas.com.br" or "www.creditas.com.
     >> ['meajuda@creditas.com.br', 'ouvidoria@creditas.com.br', 'imprensa@creditas.com.br']
 <br>
 
+Use parameter "user_agent=True" to choice a random user agent to be used in the request
+    
+    >> email.extract_emails_from_web('urlexample.com', user_agent=True)
+
 # Author
 {
 <br>'name': Everton Tomalok,<br>
