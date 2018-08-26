@@ -120,6 +120,10 @@ class EmailTools:
         emails = list()
 
         for email in emails_dirty:
+
+            if '.br' in email:
+                email = email.split('.br')[0] + '.br'
+
             if email not in emails:
                 emails.append(email)
 
