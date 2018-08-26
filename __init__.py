@@ -100,17 +100,19 @@ class EmailTools:
 
         return match_result
 
-    def extract_emails_from_web(self, url):
+    def extract_emails_from_web(self, url, user_agent=False):
         """
         An url must be passed, as this example: "google.com" or "www.google.com"
         After processing the request, all emails of that page will be extracted, and returned in a list.
         If any email could be found, an empty list will be returned.
+        You can pass user_agent=True, to use an user agent in Header of the request.
 
         :param url: String
+        :param user_agent: Bool
         :return: List
         """
 
-        content = self._get_content_page(url)
+        content = self._get_content_page(url, user_agent)
         soup = BeautifulSoup(content, "lxml")
 
         emails_dirty = self.extract_emails_from_text(soup.text)
