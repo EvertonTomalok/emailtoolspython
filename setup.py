@@ -4,7 +4,7 @@ setup(
     version="1.0.0",
     packages=find_packages(),
 
-    install_requires=['requests>=2.19.1', 'bs4>=4.4.0'],
+    install_requires=['requests>=2.19.1', 'beautifulsoup4>=4.4.0'],
 
     # metadata to display on PyPI
     author="Everton Tomalok",
