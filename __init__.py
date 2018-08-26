@@ -1,5 +1,7 @@
 import re
 import requests
+from bs4 import BeautifulSoup
+from .util.agents import choice_one_user_agent
 
 
 class EmailTools:
@@ -24,6 +26,28 @@ class EmailTools:
 
         else:
             raise KeyError('"can_starts_with_number" only receives False or True')
+
+    @staticmethod
+    def _get_content_page(url, user_agent=False):
+
+        headers = {
+            'Connection': 'keep-alive'
+        }
+
+        if user_agent:
+
+            ua = choice_one_user_agent()
+            headers['User-Agent'] = ua
+
+        # Preparing URL, and make two requests. One to https and other to http
+        try:
+
+            req = requests.get('https://%s'% url, headers=headers)
+
+        except Exception:
+            req = requests.get('http://%s' % url, headers=headers)
+
+        return req.content
 
     def syntax_validation(self, email_parameter=None, can_starts_with_number=False):
         """
@@ -67,8 +91,25 @@ class EmailTools:
 
         return match_result
 
-    def extract_emails_from_web(self, url=None):
+    def extract_emails_from_web(self, url):
+        """
+        An url must be passed, as this exemplo: "google.com" or "www.google.com"
+        After processing the request, all emails of that page will be extracted, and returned in a list.
+        If any email could be found, an empty list will be returned.
 
-        # Will be implemented in the future
-        pass
+        :param url: String
+        :return: List
+        """
 
+        content = self._get_content_page(url)
+        soup = BeautifulSoup(content, "lxml")
+
+        emails_dirty = self.extract_emails_from_text(soup.text)
+
+        emails = list()
+
+        for email in emails_dirty:
+            if email not in emails:
+                emails.append(email)
+
+        return emails
