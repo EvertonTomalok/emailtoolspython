@@ -1,5 +1,11 @@
 ### emailtoolspython
 A serie of methods to help you work with validation and extraction of e-mails
+<br>
+
+# Install
+
+    >> pip install --user emailtoolspython
+    
 
 # Usage
     >> from emailtoolspython import EmailTools
