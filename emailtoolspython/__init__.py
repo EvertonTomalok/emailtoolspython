@@ -4,7 +4,7 @@ Python module for help working with Emails.
 """
 
 __author__ = 'Everton Tomalok'
-__version__ = '1.0.6'
+__version__ = '1.0.7'
 __email__ = 'evertontomalok123@gmail.com'
 name = 'emailtoolspython'
 
@@ -23,17 +23,16 @@ class EmailTools:
     def _make_compiler(cls, can=False):
 
         # using another base_regex, different of the self.regex_simple
-        base_regex = r'(\.[a-za-z0-9-_]+)*@[a-z0-9-]+\.([a-z0-9-]+)*(\.[a-z0-9-]+)*$'
+        base_regex = r'[a-za-z0-9_\.]+@[a-z0-9-]+\.([a-z0-9-]+)*(\.[a-z0-9-]+)*$'
 
         if not can:
-            regex = '%s%s' % (r'^[a-zA-Z_]', base_regex)
+            regex = '%s%s' % (r'^[^0-9]', base_regex)
 
             return re.compile(regex)
 
         elif can is True:
-            regex = '%s%s' % (r'^[a-zA-Z0-9_]', base_regex)
 
-            return re.compile(regex)
+            return re.compile(base_regex)
 
         else:
             raise KeyError('"can_starts_with_number" only receives False or True')
