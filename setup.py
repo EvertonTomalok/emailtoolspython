@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 setup(
     name='emailtoolspython',
     packages=find_packages(),
-    version='1.0.4',
+    version='1.0.5',
     author="Everton Tomalok",
     author_email="evertontomalok123@gmail.com",
     description="A serie of methods to help you work with validation and extraction of e-mails",
