@@ -4,7 +4,7 @@ Python module for help working with Emails.
 """
 
 __author__ = 'Everton Tomalok'
-__version__ = '1.0.5'
+__version__ = '1.0.6'
 __email__ = 'evertontomalok123@gmail.com'
 name = 'emailtoolspython'
 
