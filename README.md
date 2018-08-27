@@ -6,9 +6,22 @@ A serie of methods to help you work with validation and extraction of e-mails
 
     >> pip install --user emailtoolspython
     
+    
+Or you can download the zip of the module, to your root project
+    
+    >> cd path/to/your_module
+    >> wget https://github.com/EvertonTomalok/emailtoolspython/archive/master.zip
+    
 
 # Usage
+
+    # From pip
     >> from emailtoolspython import EmailTools
+
+    >> email = EmailTools()
+    
+    # From wget
+    >> from emailtoolspython.emailtoolspython import EmailTools
 
     >> email = EmailTools()
 
