@@ -13,7 +13,7 @@ from .util.seleniumdriver import Driver
 
 name = 'emailtoolspython'
 __author__ = 'Everton Tomalok'
-__version__ = '1.0.8'
+__version__ = '1.0.8b'
 __email__ = 'evertontomalok123@gmail.com'
 
 
@@ -67,7 +67,7 @@ class EmailTools:
         else:
             driver = Driver()
 
-            return driver.get_page_source('http://%s' % url, use_user_agent=False)
+            return driver.get_page_source('http://%s' % url, user_agent)
 
     @property
     def base_regex(self):
