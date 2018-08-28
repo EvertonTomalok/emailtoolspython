@@ -48,7 +48,7 @@ Passing the Parameter "can_starts_with_number=True", you can verify e-mails that
  ## Extracting Emails from a text
 To extract all emails from a text, use extract_emails_from_text():
     
-    >> validator.extract_emails_from_text('lorsi sldaljq indajfa email@example.com sajdiosafhu. A example@email.com')
+    >> email.extract_emails_from_text('lorsi sldaljq indajfa email@example.com sajdiosafhu. A example@email.com')
     >> ['email@example.com', 'example@email.com']
 
 <br>
