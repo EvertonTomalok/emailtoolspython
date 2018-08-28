@@ -3,15 +3,18 @@
 Python module for help working with Emails.
 """
 
-__author__ = 'Everton Tomalok'
-__version__ = '1.0.7'
-__email__ = 'evertontomalok123@gmail.com'
-name = 'emailtoolspython'
-
 import re
 import requests
+
 from bs4 import BeautifulSoup
 from .util.agents import choice_one_user_agent
+from .util.seleniumdriver import Driver
+
+
+name = 'emailtoolspython'
+__author__ = 'Everton Tomalok'
+__version__ = '1.0.8'
+__email__ = 'evertontomalok123@gmail.com'
 
 
 class EmailTools:
@@ -38,26 +41,33 @@ class EmailTools:
             raise KeyError('"can_starts_with_number" only receives False or True')
 
     @staticmethod
-    def _get_content_page(url, user_agent=False):
+    def _get_content_page(url, user_agent=False, use_selenium=False):
 
-        headers = {
-            'Connection': 'keep-alive'
-        }
+        if not use_selenium:
 
-        if user_agent:
+            headers = {
+                'Connection': 'keep-alive'
+            }
 
-            ua = choice_one_user_agent()
-            headers['User-Agent'] = ua
+            if user_agent:
 
-        # Preparing URL, and make two requests, if the first is failed. One to https and other to http
-        try:
+                ua = choice_one_user_agent()
+                headers['User-Agent'] = ua
 
-            req = requests.get('https://%s'% url, headers=headers)
+            # Preparing URL, and make two requests, if the first is failed. One to https and other to http
+            try:
 
-        except Exception:
-            req = requests.get('http://%s' % url, headers=headers)
+                req = requests.get('https://%s'% url, headers=headers)
 
-        return req.content
+            except Exception:
+                req = requests.get('http://%s' % url, headers=headers)
+
+            return req.content
+
+        else:
+            driver = Driver()
+
+            return driver.get_page_source('http://%s' % url, use_user_agent=False)
 
     @property
     def base_regex(self):
@@ -107,7 +117,7 @@ class EmailTools:
 
         return match_result
 
-    def extract_emails_from_web(self, url, user_agent=False, clean_end=[]):
+    def extract_emails_from_web(self, url, user_agent=False, clean_end=[], use_selenium=False):
 
         """
         An url must be passed, like this example: "google.com" or "www.google.com"
@@ -125,7 +135,7 @@ class EmailTools:
         :return: List
         """
 
-        content = self._get_content_page(url, user_agent)
+        content = self._get_content_page(url, user_agent, use_selenium)
         soup = BeautifulSoup(content, "lxml")
 
         emails_dirty = self.extract_emails_from_text(soup.text)
@@ -138,6 +148,8 @@ class EmailTools:
                 for item in clean_end:
                     if item in email:
                         email = email.split(item)[0] + item
+
+                        break
 
             if email not in emails:
                 emails.append(email)

@@ -9,9 +9,10 @@ A serie of methods to help you work with validation and extraction of e-mails
     
 Or you can download the zip of the module, to your root project
     
-    >> cd path/to/your_module
+    >> cd path/to/your/module
     >> wget https://github.com/EvertonTomalok/emailtoolspython/archive/master.zip
-    
+    >> unzip master.zip
+    >> mv emailtoolspython-master emailtoolspython
 
 # Usage
 
@@ -86,7 +87,25 @@ not "email@domain.com.net" as it must to be. To avoid this, use "clean_end=['.ne
     # Avoid using this:
     >> email.extract_emails_from_web('someurl.com', "clean_end=['.com', '.net']")
     >> "email@domain.com" # The email returned was not what probably you were expecting.
-
+    
+ <br>
+ 
+ You can use selenium (a webdriver that simulate you are using Google Chrome to access some page) to run and crawl web pages
+ that need to execute javascript.
+ Is very simple use this feature, you only need to have chromedriver in your path /usr/bin or /usr/local/bin, and pass the parameter
+ "use_selenium" as True. It's important to mention, that the speed of the crawl will decrease.
+ 
+    # Extract emails using Selenium in headless
+    
+    >> email.extract_emails_from_web('creditas.com.br', use_selenium=True, user_agent=True) 
+    >> ['meajuda@creditas.com.br', 'ouvidoria@creditas.com.br', 'imprensa@creditas.com.br']
+    
+    # Using selenium, user_agent is not necessary. You can pass user_agent=False, if you want.
+    
+ You can download chromedriver here (https://sites.google.com/a/chromium.org/chromedriver/downloads) and you can acess the
+ official documentation - python bindings for selenium (https://selenium-python.readthedocs.io/installation.html).<br>
+ For windows users, go to the official documentation to have help to install chromedriver.
+<br><br><br>
 # Author
 {
 <br>'name': Everton Tomalok,<br>
