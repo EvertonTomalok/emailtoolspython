@@ -66,7 +66,7 @@ Use parameter "user_agent=True" to choice a random user agent to be used in the 
     >> email.extract_emails_from_web('urlexample.com', user_agent=True)
     
 Pass a list of strings, of possibilities of end domains, if you need to clean emails crawleds from a web site.<br>
-For example, a know my emails extracted from web site, will end with .br, I can pass "clean_end=['.br']". 
+For example, I know that my emails extracted from web site, will end with .br, I can pass "clean_end=['.br']". 
 
     >> email.extract_emails_from_web('lendico.com.br', user_agent=True)
     >> ['atendimento@lendico.com.br.leia']
