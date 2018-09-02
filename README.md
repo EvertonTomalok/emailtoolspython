@@ -1,5 +1,5 @@
 ### emailtoolspython
-A serie of methods to help you work with validation and extraction of e-mails
+A series of methods to help you work with validation and extraction of e-mails
 <br>
 
 # Install
@@ -29,7 +29,7 @@ Or you can download the zip of the module, to your root project
 <br>
 
 ## Syntax Email Validation
-To verify if the syntax of an email is valid, use the method bellow:
+To verify if the syntax of an email is valid, use the method below:
     
     >> email.syntax_validation('evertontomalok123@gmail.com')
     >> True
@@ -37,7 +37,7 @@ To verify if the syntax of an email is valid, use the method bellow:
     >> False
 <br>
     
-Passing the Parameter "can_starts_with_number=True", you can verify e-mails that starts with number:
+Passing the Parameter "can_starts_with_number=True", you can verify e-mail that starts a number:
 
     >> email.syntax_validation('24hours_laundry@gmail.com')
     >> False
@@ -55,18 +55,18 @@ To extract all emails from a text, use extract_emails_from_text():
 
 ## Extracting Emails from a web page
 You can pass a site domain to extract_emails_from_web(), and all emails crawled in that page, will be returned in a list. 
-Note, a domain must be passed like this: "creditas.com.br" or "www.creditas.com.br" or anothers ways "app.creditas.com.br"
+Note, a domain must be passed like this: "creditas.com.br" or "www.creditas.com.br" or another way "app.creditas.com.br"
 
     >> email.extract_emails_from_web('creditas.com.br')
     >> ['meajuda@creditas.com.br', 'ouvidoria@creditas.com.br', 'imprensa@creditas.com.br']
 <br>
 
-Use parameter "user_agent=True" to choice a random user agent to be used in the request
+Use parameter "user_agent=True" to choose a random user agent to be used in the request
     
     >> email.extract_emails_from_web('urlexample.com', user_agent=True)
     
-Pass a list of strings, of possibilities of end domains, if you need to clean emails crawleds from a web site.<br>
-For example, I know that my emails extracted from web site, will end with .br, I can pass "clean_end=['.br']". 
+Pass a list of strings, of possibilities of end domains, if you need to clean emails crawled from a website.<br>
+For example, I know that my emails extracted from website, will end with .br, I can pass "clean_end=['.br']". 
 
     >> email.extract_emails_from_web('lendico.com.br', user_agent=True)
     >> ['atendimento@lendico.com.br.leia']
@@ -102,9 +102,9 @@ not "email@domain.com.net" as it must to be. To avoid this, use "clean_end=['.ne
     
     # Using selenium, user_agent is not necessary. You can pass user_agent=False, if you want.
     
- You can download chromedriver here (https://sites.google.com/a/chromium.org/chromedriver/downloads) and you can acess the
+ You can download chromedriver here (https://sites.google.com/a/chromium.org/chromedriver/downloads) and you can access the
  official documentation - python bindings for selenium (https://selenium-python.readthedocs.io/installation.html).<br>
- For windows users, go to the official documentation to have help to install chromedriver.
+ For Windows users, go to the official documentation to have help to install chromedriver.
 <br><br><br>
 # Author
 {
