@@ -9,11 +9,12 @@ import requests
 from bs4 import BeautifulSoup
 from .util.agents import choice_one_user_agent
 from .util.seleniumdriver import Driver
+import socket
 
 
 name = 'emailtoolspython'
 __author__ = 'Everton Tomalok'
-__version__ = '1.0.8b'
+__version__ = '1.0.9'
 __email__ = 'evertontomalok123@gmail.com'
 
 
@@ -134,6 +135,11 @@ class EmailTools:
         :param user_agent: Bool
         :return: List
         """
+
+        try:
+            socket.gethostbyname(url)
+        except socket.gaierror:
+            raise ConnectionError('Probably the url "{}" is not valid.'.format(url))
 
         content = self._get_content_page(url, user_agent, use_selenium)
         soup = BeautifulSoup(content, "lxml")
