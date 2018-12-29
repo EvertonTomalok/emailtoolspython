@@ -47,7 +47,7 @@ Passing the Parameter "can_starts_with_number=True", you can verify e-mail that 
    
  ## Email SMTP Validation
  
- Pass a email to verify if domain is registered as a server, and if the email passed exists or not.
+ Pass an email to verify if domain is registered as a server, and if the email passed exists or not.
     
     # The example bellow is a valid email
     >> email.smtp_validation('evertontomalok123@gmail.com')   
