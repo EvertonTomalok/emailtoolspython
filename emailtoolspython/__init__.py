@@ -10,6 +10,9 @@ from bs4 import BeautifulSoup
 from .util.agents import choice_one_user_agent
 from .util.seleniumdriver import Driver
 import socket
+import dns.resolver
+import dns.name
+import smtplib
 
 
 name = 'emailtoolspython'
@@ -99,6 +102,88 @@ class EmailTools:
             return False
         else:
             return True
+
+    def smtp_validation(self, email_to_validate):
+        """
+        It's a function to validade in SMTP, if exists a server with domain of the email, and
+        :param email_to_validate: STRING likes a email "example@domain.com"
+        :return: 200 - The email is valid
+                 400 - The email is invalid
+                 404 - The email or domain wasn't founded
+        """
+
+        if not self.syntax_validation(email_to_validate, True):
+            """
+            First validation. If the syntax isn't an email, 400 is returned.
+            """
+            return 400
+
+        try:
+            """
+            Now, we'll validate if the domain is registered in a SMTP server, and after this, try to capture a ehlo msg
+            and the hello message from server.
+            
+            If the server sent a hello message for us, the email is valid. 
+            
+            Some servers are catch all, accepting all email as valid, for example a email 
+            banana_12351513ksfa@domain-catch-all.com, this email will be returned as valid, but it isn't.
+            """
+
+            # Testing if domain is registered as a server.
+            records = dns.resolver.query(email_to_validate.split('@')[1], 'mx')
+
+            mx_record = records[0].exchange
+            # Searching for preferences from server
+            records[0].preference
+
+            mx_record = str(mx_record)
+
+            # connecting to the STMP
+            server = smtplib.SMTP(timeout=15)
+            server.set_debuglevel(0)
+            server.connect(mx_record)
+
+            # Searching for hello response
+            server.helo()
+            server.helo_resp
+            server.ehlo_msg
+
+            # Send a signal like an valid text email to the server.
+            server.mail('teste@gmail.com')
+
+            code, message = server.rcpt(email_to_validate)
+            server.quit()
+
+            if code == 250:
+                """ 
+                The email is valid 
+                """
+                return 200
+
+            else:
+                """
+                The email isn't valid
+                """
+                return 400
+
+        except Exception as err:
+
+            """
+            Looking for the exception.
+            """
+
+            error = str(type(err))
+
+            if 'dns.exception.Timeout' in error:
+                return 404
+            elif 'dns.resolver.NoAnswer' in error:
+                return 404
+            elif 'dns.resolver.NXDOMAIN' in error:
+                return 404
+            elif 'SMTPServerDisconnected' in "<class 'smtplib.SMTPServerDisconnected'> Connection unexpectedly closed":
+                return 400
+            else:
+                return 404
 
     def extract_emails_from_text(self, text):
 
