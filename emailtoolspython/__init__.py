@@ -110,13 +110,14 @@ class EmailTools:
         :return: 200 - The email is valid
                  400 - The email is invalid
                  404 - The email or domain wasn't founded
+                 405 - The syntax is invalid
         """
 
         if not self.syntax_validation(email_to_validate, True):
             """
-            First validation. If the syntax isn't an email, 400 is returned.
+            First validation. If the syntax isn't a valid email, 405 is returned.
             """
-            return 400
+            return 405
 
         try:
             """
@@ -139,20 +140,20 @@ class EmailTools:
             mx_record = str(mx_record)
 
             # connecting to the STMP
-            server = smtplib.SMTP(timeout=15)
-            server.set_debuglevel(0)
-            server.connect(mx_record)
+            smtp_server = smtplib.SMTP(timeout=15)
+            smtp_server.set_debuglevel(0)
+            smtp_server.connect(mx_record)
 
             # Searching for hello response
-            server.helo()
-            server.helo_resp
-            server.ehlo_msg
+            smtp_server.helo()
+            smtp_server.helo_resp
+            smtp_server.ehlo_msg
 
             # Send a signal like an valid text email to the server.
-            server.mail('teste@gmail.com')
+            smtp_server.mail('teste@gmail.com')
 
-            code, message = server.rcpt(email_to_validate)
-            server.quit()
+            code, message = smtp_server.rcpt(email_to_validate)
+            smtp_server.quit()
 
             if code == 250:
                 """ 

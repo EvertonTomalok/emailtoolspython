@@ -44,7 +44,28 @@ Passing the Parameter "can_starts_with_number=True", you can verify e-mail that 
     >> email.syntax_validation('24hours_laundry@gmail.com', can_starts_with_number=True)
     >> True
 <br>
+   
+ ## Email SMTP Validation
+ 
+ Pass a email to verify if it's valid or not
     
+    # The example bellow is a valid email
+    >> email.smtp_validation('evertontomalok123@gmail.com')   
+    >> 200 
+    
+    # It isn't valid!
+    >> email.smtp_validation('evertontomalok123123123@gmail.com')   
+    >> 400 
+    
+    # The domain or email wasn't founded.
+    >> email.smtp_validation('asdar1t1@214135135qsas1.com')
+    >> 404 
+    
+    # The syntax is invalid
+    >> email.smtp_validation('not_a_valid_email@not-domain')
+    >> 405 
+
+
  ## Extracting Emails from a text
 To extract all emails from a text, use extract_emails_from_text():
     
@@ -87,7 +108,7 @@ not "email@domain.com.net" as it must to be. To avoid this, use "clean_end=['.ne
     # Avoid using this:
     >> email.extract_emails_from_web('someurl.com', "clean_end=['.com', '.net']")
     >> "email@domain.com" # The email returned was not what probably you were expecting.
-    
+        
  <br>
  
  You can use selenium (a webdriver that simulate you are using Google Chrome to access some page) to run and crawl web pages
