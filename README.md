@@ -53,7 +53,7 @@ Passing the Parameter "can_starts_with_number=True", you can verify e-mail that 
     >> email.smtp_validation('evertontomalok123@gmail.com')   
     >> 200 
     
-    # It isn't valid!
+    # It isn't valid or the email couldn't be validated!
     >> email.smtp_validation('evertontomalok123123123@gmail.com')   
     >> 400 
     
