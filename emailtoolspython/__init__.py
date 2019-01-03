@@ -181,7 +181,7 @@ class EmailTools:
                 return 404
             elif 'dns.resolver.NXDOMAIN' in error:
                 return 404
-            elif 'SMTPServerDisconnected' in "<class 'smtplib.SMTPServerDisconnected'> Connection unexpectedly closed":
+            elif 'SMTPServerDisconnected' in error:
                 return 400
             else:
                 return 404
