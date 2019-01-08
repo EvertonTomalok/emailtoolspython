@@ -50,21 +50,41 @@ Passing the Parameter "can_starts_with_number=True", you can verify e-mail that 
  Pass an email to verify if domain is registered as a server, and if the email passed exists or not.
     
     # The example bellow is a valid email
-    >> email.smtp_validation('evertontomalok123@gmail.com')   
+    >> email.email_smtp_validation('evertontomalok123@gmail.com')   
     >> 200 
     
     # It isn't valid or the email couldn't be validated!
-    >> email.smtp_validation('evertontomalok123123123@gmail.com')   
+    >> email.email_smtp_validation('evertontomalok123123123@gmail.com')   
     >> 400 
     
-    # The domain or email wasn't founded.
-    >> email.smtp_validation('asdar1t1@214135135qsas1.com')
-    >> 404 
+    # The domain wasn't founded.
+    >> email.email_smtp_validation('asdar1t1@214135135qsas1.com')
+    >> 402 
     
     # The syntax is invalid
-    >> email.smtp_validation('not_a_valid_email@not-domain')
-    >> 405 
+    >> email.email_smtp_validation('not_a_valid_email@not-domain')
+    >> 403
+    
+    All returns:
+         200 - The email is valid
+         400 - The email is invalid
+         401 - Try later
+         402 - The domain wasn't founded
+         403 - The syntax is invalid
 
+  ## Validating a domain
+    # A valid domain
+    >> email.domain_smtp_validation('gmail.com'))
+    >> 200
+    
+    # An invalid domain
+    >> email.domain_smtp_validation('gmail.com.br'))
+    >> 400
+    
+    # Timeout, try later
+    >>  email.domain_smtp_validation('a_timeout_ocurried.com'))
+    >> 401
+    
 
  ## Extracting Emails from a text
 To extract all emails from a text, use extract_emails_from_text():
@@ -128,7 +148,9 @@ not "email@domain.com.net" as it must to be. To avoid this, use "clean_end=['.ne
  For Windows users, go to the official documentation to have help to install chromedriver.
 <br><br><br>
 # Author
-{
-<br>'name': Everton Tomalok,<br>
-'email': evertontomalok123@gmail.com<br>
-}
+    {
+        'name': Everton Tomalok,
+        'email': evertontomalok123@gmail.com,
+        'medium': medium.com/@everton.tomalok,
+        'linkedin': linkedin.com/in/evertontomalok
+    }

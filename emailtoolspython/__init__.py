@@ -13,11 +13,12 @@ import socket
 import dns.resolver
 import dns.name
 import smtplib
+from dns.resolver import NXDOMAIN, NoAnswer, Timeout
 
 
 name = 'emailtoolspython'
 __author__ = 'Everton Tomalok'
-__version__ = '1.0.9'
+__version__ = '0.2.1'
 __email__ = 'evertontomalok123@gmail.com'
 
 
@@ -103,21 +104,47 @@ class EmailTools:
         else:
             return True
 
-    def smtp_validation(self, email_to_validate):
+    def domain_smtp_validation(self, domain):
+        """
+        It's a function do validate if a domain exists in mx records from a smtp server.
+        Returns 200 if the domain exists, 400 if it doesn't exist, and 401 to you try repeat the test later.
+        :param domain: String
+        :return: Integer
+                 200 - Ok
+                 400 - Not Found
+                 401 - Try Later
+        """
+
+        assert isinstance(domain, str), 'A STRING containing a domain pattern, must be passed as parameter.'
+
+        try:
+            dns.resolver.query(domain, 'mx')
+            return 200
+
+        except NXDOMAIN:
+            return 400
+        except NoAnswer:
+            return 400
+        except Timeout:
+            return 401
+
+    def email_smtp_validation(self, email_to_validate):
         """
         It's a function to validade in SMTP, if exists a server with domain of the email, and
         :param email_to_validate: STRING likes a email "example@domain.com"
-        :return: 200 - The email is valid
+        :return: INTEGER
+                 200 - The email is valid
                  400 - The email is invalid
-                 404 - The email or domain wasn't founded
-                 405 - The syntax is invalid
+                 401 - Try later
+                 402 - The domain wasn't founded
+                 403 - The syntax is invalid
         """
 
         if not self.syntax_validation(email_to_validate, True):
             """
             First validation. If the syntax isn't a valid email, 405 is returned.
             """
-            return 405
+            return 403
 
         try:
             """
@@ -144,7 +171,7 @@ class EmailTools:
             smtp_server.set_debuglevel(0)
             smtp_server.connect(mx_record)
 
-            # Searching for hello response
+            # Searching for hello response. If all occur ok, no exceptions will be raised.
             smtp_server.helo()
             smtp_server.helo_resp
             smtp_server.ehlo_msg
@@ -176,15 +203,15 @@ class EmailTools:
             error = str(type(err))
 
             if 'dns.exception.Timeout' in error:
-                return 404
+                return 401
             elif 'dns.resolver.NoAnswer' in error:
-                return 404
+                return 402
             elif 'dns.resolver.NXDOMAIN' in error:
-                return 404
+                return 402
             elif 'SMTPServerDisconnected' in error:
                 return 400
             else:
-                return 404
+                return 400
 
     def extract_emails_from_text(self, text):
 
