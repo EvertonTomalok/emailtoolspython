@@ -78,7 +78,7 @@ class EmailTools:
     def base_regex(self):
         return self.regex_simple
 
-    def syntax_validation(self, email_parameter=None, can_starts_with_number=False):
+    def syntax_validation(self, email_parameter=None, can_start_with_number=False):
         """
         A function to verify if the syntax of an email is valid. True is an email with syntax valid, and False an email
         with syntax invalid.
@@ -95,7 +95,7 @@ class EmailTools:
         if email_parameter is None:
             raise ValueError('You must pass an email as a STRING parameter in the function syntax_validation()')
 
-        compiler = self._make_compiler(can_starts_with_number)
+        compiler = self._make_compiler(can_start_with_number)
 
         match_result = compiler.search(email_parameter)
 
