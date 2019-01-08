@@ -41,7 +41,7 @@ Passing the Parameter "can_start_with_number=True", you can verify e-mail that s
 
     >> email.syntax_validation('24hours_laundry@gmail.com')
     >> False
-    >> email.syntax_validation('24hours_laundry@gmail.com', can_starts_with_number=True)
+    >> email.syntax_validation('24hours_laundry@gmail.com', can_start_with_number=True)
     >> True
 <br>
    
