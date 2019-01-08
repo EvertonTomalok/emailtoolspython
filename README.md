@@ -37,7 +37,7 @@ To verify if the syntax of an email is valid, use the method below:
     >> False
 <br>
     
-Passing the Parameter "can_starts_with_number=True", you can verify e-mail that starts a number:
+Passing the Parameter "can_start_with_number=True", you can verify e-mail that starts a number:
 
     >> email.syntax_validation('24hours_laundry@gmail.com')
     >> False
