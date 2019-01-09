@@ -23,6 +23,9 @@ if __name__ == '__main__':
     # Validating domain of the third example, and it really doesn't exist (at least for now haha)
     print(email.domain_smtp_validation('214135135qsas1.com'))
 
+    # Getting emails from webpage
+    print(email.extract_emails_from_web('http://laclaw.com.br/Contato-e-Localizacao.html'))
+
     """
     Result expected:
         200
@@ -31,4 +34,5 @@ if __name__ == '__main__':
         403
         200
         400
+        ['laclaw@laclaw.com.br']
     """

@@ -92,7 +92,9 @@ To extract all emails from a text, use extract_emails_from_text():
 
 ## Extracting Emails from a web page
 You can pass a site domain to extract_emails_from_web(), and all emails crawled in that page, will be returned in a list. 
-Note, a domain must be passed like this: "creditas.com.br" or "www.creditas.com.br" or another way "app.creditas.com.br"
+Note, a domain must be passed like this: "creditas.com.br" or "www.creditas.com.br" or another way "app.creditas.com.br".
+An url from a contact page, can be passed too, like this: "http://laclaw.com.br/Contato-e-Localizacao.html".
+
 
     >> email.extract_emails_from_web('creditas.com.br')
     >> ['meajuda@creditas.com.br', 'ouvidoria@creditas.com.br', 'imprensa@creditas.com.br']

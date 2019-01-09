@@ -18,7 +18,7 @@ from dns.resolver import NXDOMAIN, NoAnswer, Timeout
 
 name = 'emailtoolspython'
 __author__ = 'Everton Tomalok'
-__version__ = '0.2.3'
+__version__ = '0.2.4'
 __email__ = 'evertontomalok123@gmail.com'
 
 
@@ -169,7 +169,7 @@ class EmailTools:
             # connecting to the STMP
             smtp_server = smtplib.SMTP(timeout=15)
             smtp_server.set_debuglevel(0)
-            smtp_server.connect(mx_record)
+            smtp_server.test_connect(mx_record)
 
             # Searching for hello response. If all occur ok, no exceptions will be raised.
             smtp_server.helo()
@@ -249,10 +249,22 @@ class EmailTools:
         :return: List
         """
 
+        if 'https://' in url:
+            url = url.replace('https://', '')
+        elif 'http://' in url:
+            url = url.replace('http://', '')
+
+        if '/' in url:
+            test_connect = url.split('/')[0]
+        else:
+            test_connect = url
+
         try:
-            socket.gethostbyname(url)
+            socket.gethostbyname(test_connect)
         except socket.gaierror:
-            raise ConnectionError('Probably the url "{}" is not valid.'.format(url))
+            raise ConnectionError('Probably the domain "{}" is not valid.'.format(test_connect))
+
+        del test_connect
 
         content = self._get_content_page(url, user_agent, use_selenium)
         soup = BeautifulSoup(content, "lxml")
