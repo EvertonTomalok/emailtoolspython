@@ -12,17 +12,13 @@ Or you can download the zip of the module, to your root project
     >> cd path/to/your/module
     >> wget https://github.com/EvertonTomalok/emailtoolspython/archive/master.zip
     >> unzip master.zip
-    >> mv emailtoolspython-master emailtoolspython
+    >> cd emailtoolspython-master
+    >> python3 setup.py install --user
 
 # Usage
 
     # From pip
     >> from emailtoolspython import EmailTools
-
-    >> email = EmailTools()
-    
-    # From wget
-    >> from emailtoolspython.emailtoolspython import EmailTools
 
     >> email = EmailTools()
 
