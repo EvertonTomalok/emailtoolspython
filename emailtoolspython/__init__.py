@@ -142,7 +142,7 @@ class EmailTools:
 
         if not self.syntax_validation(email_to_validate, True):
             """
-            First validation. If the syntax isn't a valid email, 405 is returned.
+            First validation. If the syntax isn't a valid email, 403 is returned.
             """
             return 403
 
