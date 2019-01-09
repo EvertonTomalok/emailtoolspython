@@ -18,7 +18,7 @@ from dns.resolver import NXDOMAIN, NoAnswer, Timeout
 
 name = 'emailtoolspython'
 __author__ = 'Everton Tomalok'
-__version__ = '0.2.4'
+__version__ = '0.3.0'
 __email__ = 'evertontomalok123@gmail.com'
 
 
@@ -87,7 +87,7 @@ class EmailTools:
         To disable this feature, use False instead.
 
         :param email_parameter: String
-        :param can_starts_with_number: Bool
+        :param can_start_with_number: Bool
         :raise ValueError: Raises if any email isn't pass
         :return: Bool
         """
@@ -109,24 +109,29 @@ class EmailTools:
         It's a function do validate if a domain exists in mx records from a smtp server.
         Returns 200 if the domain exists, 400 if it doesn't exist, and 401 to you try repeat the test later.
         :param domain: String
-        :return: Integer
-                 200 - Ok
-                 400 - Not Found
-                 401 - Try Later
+        :return: Dict
+                 {'status': 200, 'ip_host': 'str_containing_ip' } - Ok
+                 {'status': 400, 'ip_host': None } - Not Found
+                 {'status': 401, 'ip_host': None } - Try Later
         """
 
         assert isinstance(domain, str), 'A STRING containing a domain pattern, must be passed as parameter.'
 
         try:
             dns.resolver.query(domain, 'mx')
-            return 200
+
+            try:
+                value = socket.gethostbyname(domain)
+            except socket.gaierror:
+                value = 'not_info_available'
+            return {'status': 200, 'ip_address': value}
 
         except NXDOMAIN:
-            return 400
+            return {'status': 400, 'ip_address': None}
         except NoAnswer:
-            return 400
+            return {'status': 400, 'ip_address': None}
         except Timeout:
-            return 401
+            return {'status': 401, 'ip_address': None}
 
     def email_smtp_validation(self, email_to_validate):
         """

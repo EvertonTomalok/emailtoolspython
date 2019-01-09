@@ -17,7 +17,6 @@ Or you can download the zip of the module, to your root project
 
 # Usage
 
-    # From pip
     >> from emailtoolspython import EmailTools
 
     >> email = EmailTools()
@@ -71,15 +70,15 @@ Passing the Parameter "can_start_with_number=True", you can verify e-mail that s
   ## Validating a domain
     # A valid domain
     >> email.domain_smtp_validation('gmail.com'))
-    >> 200
-    
+    >> {'status': 200, 'ip_address': 'str_containing_ip' } - Ok
+
     # An invalid domain
     >> email.domain_smtp_validation('gmail.com.br'))
-    >> 400
+    >> {'status': 400, 'ip_address': None } - Not Found
     
     # Timeout, try later
     >>  email.domain_smtp_validation('a_timeout_ocurried.com'))
-    >> 401
+    >> {'status': 401, 'ip_address': None } - Try Later
     
 
  ## Extracting Emails from a text

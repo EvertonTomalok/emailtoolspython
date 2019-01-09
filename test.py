@@ -28,11 +28,11 @@ if __name__ == '__main__':
 
     """
     Result expected:
-        200
+        400
         400
         402
         403
-        200
-        400
+        {'status': 200, 'ip_address': '172.217.28.133'}
+        {'status': 400, 'ip_address': None}
         ['laclaw@laclaw.com.br']
     """
