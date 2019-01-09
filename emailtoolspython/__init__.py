@@ -18,7 +18,7 @@ from dns.resolver import NXDOMAIN, NoAnswer, Timeout
 
 name = 'emailtoolspython'
 __author__ = 'Everton Tomalok'
-__version__ = '0.2.2'
+__version__ = '0.2.3'
 __email__ = 'evertontomalok123@gmail.com'
 
 
@@ -177,7 +177,7 @@ class EmailTools:
             smtp_server.ehlo_msg
 
             # Send a signal like an valid text email to the server.
-            smtp_server.mail('teste@gmail.com')
+            smtp_server.mail('validate@coexist.com')
 
             code, message = smtp_server.rcpt(email_to_validate)
             smtp_server.quit()
