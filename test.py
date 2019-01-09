@@ -28,7 +28,7 @@ if __name__ == '__main__':
 
     """
     Result expected:
-        400
+        200
         400
         402
         403

@@ -18,7 +18,7 @@ from dns.resolver import NXDOMAIN, NoAnswer, Timeout
 
 name = 'emailtoolspython'
 __author__ = 'Everton Tomalok'
-__version__ = '0.3.0'
+__version__ = '0.3.1'
 __email__ = 'evertontomalok123@gmail.com'
 
 
@@ -174,7 +174,7 @@ class EmailTools:
             # connecting to the STMP
             smtp_server = smtplib.SMTP(timeout=15)
             smtp_server.set_debuglevel(0)
-            smtp_server.test_connect(mx_record)
+            smtp_server.connect(mx_record)
 
             # Searching for hello response. If all occur ok, no exceptions will be raised.
             smtp_server.helo()
