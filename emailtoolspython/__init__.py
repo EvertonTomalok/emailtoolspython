@@ -18,19 +18,20 @@ from dns.resolver import NXDOMAIN, NoAnswer, Timeout
 
 name = 'emailtoolspython'
 __author__ = 'Everton Tomalok'
-__version__ = '0.3.1'
+__version__ = '0.4.0'
 __email__ = 'evertontomalok123@gmail.com'
 
 
 class EmailTools:
 
     def __init__(self):
-        self.regex_simple = r'\s?[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+\.?[a-zA-Z0-9-.]{0,2}\s?'
+        self._regex_simple = r'\s?[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+\.?[a-zA-Z0-9-.]{0,2}\s?'
+        self._regex_true_email = r'^[a-z0-9][a-z0-9_\.\-]*@[a-z0-9_\-]+\.[a-z]{2,3}\.?[a-z]{0,2}'
 
     @classmethod
     def _make_compiler(cls, can=False):
 
-        # using another base_regex, different of the self.regex_simple
+        # using another base_regex, different of the self._regex_simple
         base_regex = r'[a-za-z0-9_\.]+@[a-z0-9-]+\.([a-z0-9-]+)*(\.[a-z0-9-]+)*$'
 
         if not can:
@@ -76,7 +77,11 @@ class EmailTools:
 
     @property
     def base_regex(self):
-        return self.regex_simple
+        return self._regex_simple
+
+    @property
+    def true_email(self):
+        return self._regex_true_email
 
     def syntax_validation(self, email_parameter=None, can_start_with_number=False):
         """
@@ -163,7 +168,9 @@ class EmailTools:
             """
 
             # Testing if domain is registered as a server.
-            records = dns.resolver.query(email_to_validate.split('@')[1], 'mx')
+            domain = email_to_validate.split('@')[1]
+            records = dns.resolver.query(domain, 'mx')
+            del domain
 
             mx_record = records[0].exchange
             # Searching for preferences from server
@@ -236,21 +243,17 @@ class EmailTools:
 
         return match_result
 
-    def extract_emails_from_web(self, url, user_agent=False, clean_end=[], use_selenium=False):
+    def extract_emails_from_web(self, url, user_agent=False, use_selenium=False):
 
         """
         An url must be passed, like this example: "google.com" or "www.google.com"
         After processing the request, all emails of that page will be extracted, and returned in a list.
         If any email could be found, an empty list will be returned.
         You can "pass user_agent=True", to use an user agent in Header of the request.
-        In order to pre processing your email, you can pass a list of 'strings' to be cleaned in email. For example,
-        if one email is email@domain.com.netPhrase, you can use clean_end=['.net']. It's very recommended you use '.com'
-        in the last position of the array, because if the same email "email@domain.com.netPhrase", if you use
-        clean_end=['.com','.net'], your email returned will be "email@domain.com", not "email@domain.com.net" as it must
-        to be.
 
         :param url: String
         :param user_agent: Bool
+        :use_selenium: Bool
         :return: List
         """
 
@@ -280,12 +283,12 @@ class EmailTools:
 
         for email in emails_dirty:
 
-            if clean_end != []:
-                for item in clean_end:
-                    if item in email:
-                        email = email.split(item)[0] + item
-
-                        break
+            try:
+                email = re.search(self.true_email, email)
+                email = email.group()
+            except AttributeError:
+                del email
+                continue
 
             if email not in emails:
                 emails.append(email)

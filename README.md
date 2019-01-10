@@ -102,30 +102,11 @@ An url from a contact page, can be passed too, like this: "http://laclaw.com.br/
 Use parameter "user_agent=True" to choose a random user agent to be used in the request
     
     >> email.extract_emails_from_web('urlexample.com', user_agent=True)
-    
-Pass a list of strings, of possibilities of end domains, if you need to clean emails crawled from a website.<br>
-For example, I know that my emails extracted from website, will end with .br, I can pass "clean_end=['.br']". 
 
+    # EXAMPLE
     >> email.extract_emails_from_web('lendico.com.br', user_agent=True)
-    >> ['atendimento@lendico.com.br.leia']
-
-    >> email.extract_emails_from_web('lendico.com.br', user_agent=True, clean_end=['.br'])
     >> ['atendimento@lendico.com.br']
 
-<br>
-It's very recommended pass '.com' as the last position in the list, because if the email finishes with other element
-different of '.com', probably the email returned not will be the expected.<br>
-For example, "email@domain.com.netPhrase", if you use "clean_end=['.com','.net']", your email returned will be "email@domain.com", 
-not "email@domain.com.net" as it must to be. To avoid this, use "clean_end=['.net', '.com']", or the items you need.
-
-    >> email.extract_emails_from_web('someurl.com', "clean_end=['.net', '.br', '.ar', '.us', '.com']")
-    >> "email@domain.com.net" # The email returned in the method "extract_emails_from_web()", 
-                              # it was "email@domain.com.netPhrase", and after pre processing it was this result.
-
-    # Avoid using this:
-    >> email.extract_emails_from_web('someurl.com', "clean_end=['.com', '.net']")
-    >> "email@domain.com" # The email returned was not what probably you were expecting.
-        
  <br>
  
  You can use selenium (a webdriver that simulate you are using Google Chrome to access some page) to run and crawl web pages
