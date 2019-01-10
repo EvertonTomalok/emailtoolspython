@@ -18,7 +18,7 @@ from dns.resolver import NXDOMAIN, NoAnswer, Timeout
 
 name = 'emailtoolspython'
 __author__ = 'Everton Tomalok'
-__version__ = '0.4.1'
+__version__ = '0.4.2'
 __email__ = 'evertontomalok123@gmail.com'
 
 
@@ -63,7 +63,7 @@ class EmailTools:
             # Preparing URL, and make two requests, if the first is failed. One to https and other to http
             try:
 
-                req = requests.get('https://%s'% url, headers=headers)
+                req = requests.get('https://%s' % url, headers=headers)
 
             except Exception:
                 req = requests.get('http://%s' % url, headers=headers)
@@ -82,7 +82,7 @@ class EmailTools:
         if 'https://' in url:
             url = url.replace('https://', '')
         if 'www' in url:
-            url = re.sub(r'www\d{0,3}.', '', url)
+            url = re.sub(r'www\d{0,3}\.', '', url)
 
         return url
 
