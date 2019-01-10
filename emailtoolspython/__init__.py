@@ -19,7 +19,7 @@ import tldextract
 
 name = 'emailtoolspython'
 __author__ = 'Everton Tomalok'
-__version__ = '0.4.0'
+__version__ = '0.4'
 __email__ = 'evertontomalok123@gmail.com'
 
 
@@ -129,7 +129,7 @@ class EmailTools:
 
     def domain_smtp_validation(self, domain):
         """
-        It's a function do validate if a domain exists in mx records from a smtp server.
+        It's a function to validate if a domain exists in mx records from a smtp server.
         Returns 200 if the domain exists, 400 if it doesn't exist, and 401 to you try repeat the test later.
         :param domain: String
         :return: Dict
