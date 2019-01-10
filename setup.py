@@ -21,6 +21,6 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    install_requires=['requests>=2.19.1', 'beautifulsoup4>=4.4.0', 'selenium', 'dnspython'],
+    install_requires=['requests>=2.19.1', 'beautifulsoup4>=4.4.0', 'selenium', 'dnspython', 'tldextract'],
     license="MIT",
 )

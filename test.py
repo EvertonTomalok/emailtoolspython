@@ -18,13 +18,13 @@ if __name__ == '__main__':
     print(email.email_smtp_validation('not_a_valid_email@not-domain'))
 
     # Validating a domain
-    print(email.domain_smtp_validation('www.gmail.com'))
+    print(email.domain_smtp_validation('https://www.gmail.com'))
 
     # Validating domain of the third example, and it really doesn't exist (at least for now haha)
     print(email.domain_smtp_validation('214135135qsas1.com'))
 
     # Getting emails from webpage
-    print(email.extract_emails_from_web('http://laclaw.com.br/Contato-e-Localizacao.html'))
+    print(email.extract_emails_from_web('http://laclaw.com.br/Contato-e-Localizacao.html', user_agent=True))
 
     """
     Result expected:
@@ -32,7 +32,7 @@ if __name__ == '__main__':
         400
         402
         403
-        {'status': 200, 'ip_address': '172.217.28.133'}
+        {'status': 200, 'ip_address': '172.217.28.133'} # The ip_address can change
         {'status': 400, 'ip_address': None}
         ['laclaw@laclaw.com.br']
     """
