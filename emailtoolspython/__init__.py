@@ -18,7 +18,7 @@ from dns.resolver import NXDOMAIN, NoAnswer, Timeout
 
 name = 'emailtoolspython'
 __author__ = 'Everton Tomalok'
-__version__ = '0.4.0'
+__version__ = '0.4.1'
 __email__ = 'evertontomalok123@gmail.com'
 
 
