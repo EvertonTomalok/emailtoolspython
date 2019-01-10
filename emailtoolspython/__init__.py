@@ -75,6 +75,17 @@ class EmailTools:
 
             return driver.get_page_source('http://%s' % url, user_agent)
 
+    @staticmethod
+    def _clean_url(url):
+        if 'http://' in url:
+            url = url.replace('http://', '')
+        if 'https://' in url:
+            url = url.replace('https://', '')
+        if 'www' in url:
+            url = re.sub(r'www\d{0,3}.', '', url)
+
+        return url
+
     @property
     def base_regex(self):
         return self._regex_simple
@@ -121,6 +132,8 @@ class EmailTools:
         """
 
         assert isinstance(domain, str), 'A STRING containing a domain pattern, must be passed as parameter.'
+
+        domain = self._clean_url(domain)
 
         try:
             dns.resolver.query(domain, 'mx')
