@@ -19,7 +19,7 @@ import tldextract
 
 name = 'emailtoolspython'
 __author__ = 'Everton Tomalok'
-__version__ = '0.4'
+__version__ = '0.4.0'
 __email__ = 'evertontomalok123@gmail.com'
 
 
@@ -27,7 +27,7 @@ class EmailTools:
 
     def __init__(self):
         self._regex_simple = r'\s?[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+\.?[a-zA-Z0-9-.]{0,2}\s?'
-        self._regex_true_email = r'^[a-z0-9][a-z0-9_\.\-]*@[a-z0-9_\-]+\.[a-z]{2,3}\.?[a-z]{0,2}'
+        self._regex_true_email = r'^[a-z0-9][a-z0-9_\.\-]*@[a-z0-9_\-]+\.[a-z]+\.?[a-z]{0,2}'
 
     @classmethod
     def _make_compiler(cls, can=False):
@@ -297,6 +297,15 @@ class EmailTools:
         emails_dirty = self.extract_emails_from_text(soup.text)
 
         emails = list()
+
+        for link in soup.find_all('a', href=True):
+            if 'mailto:' in link:
+                em = link.replace('mailto:', '')
+
+                if em not in emails:
+                    emails.append(em)
+
+                del em
 
         for email in emails_dirty:
 
