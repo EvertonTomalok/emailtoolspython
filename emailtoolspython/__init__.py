@@ -19,7 +19,7 @@ import tldextract
 
 name = 'emailtoolspython'
 __author__ = 'Everton Tomalok'
-__version__ = '0.4.4'
+__version__ = '0.4.5'
 __email__ = 'evertontomalok123@gmail.com'
 
 
@@ -263,7 +263,7 @@ class EmailTools:
 
         return match_result
 
-    def extract_emails_from_web(self, url, user_agent=False, use_selenium=False):
+    def extract_emails_from_web(self, url, user_agent=False, use_selenium=False, ignore_case=False):
 
         """
         An url must be passed, like this example: "google.com" or "www.google.com"
@@ -273,7 +273,8 @@ class EmailTools:
 
         :param url: String
         :param user_agent: Bool
-        :use_selenium: Bool
+        :param ignore_case: Bool
+        :param use_selenium: Bool
         :return: List
         """
 
@@ -289,8 +290,6 @@ class EmailTools:
         except socket.gaierror:
             raise ConnectionError('Probably the domain "{}" is not valid.'.format(test_connect))
 
-        del test_connect
-
         content = self._get_content_page(url, user_agent, use_selenium)
         soup = BeautifulSoup(content, "lxml")
 
@@ -305,15 +304,17 @@ class EmailTools:
                 if em not in emails:
                     emails.append(em)
 
-                del em
+        if ignore_case:
+            email_pattern = re.compile(self.true_email, re.IGNORECASE)
+        else:
+            email_pattern = re.compile(self.true_email, re.IGNORECASE)
 
         for email in emails_dirty:
 
             try:
-                email = re.search(self.true_email, email)
+                email = re.search(email_pattern, email)
                 email = email.group()
             except AttributeError:
-                del email
                 continue
 
             if email not in emails:
