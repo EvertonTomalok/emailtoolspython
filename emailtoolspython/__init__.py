@@ -263,13 +263,14 @@ class EmailTools:
 
         return match_result
 
-    def extract_emails_from_web(self, url, user_agent=False, use_selenium=False, ignore_case=False):
+    def extract_emails_from_web(self, url, user_agent=False, use_selenium=False, ignore_case=True):
 
         """
         An url must be passed, like this example: "google.com" or "www.google.com"
         After processing the request, all emails of that page will be extracted, and returned in a list.
         If any email could be found, an empty list will be returned.
         You can "pass user_agent=True", to use an user agent in Header of the request.
+        The ignore_case default is true. You can disable it to only match emails in lower case.
 
         :param url: String
         :param user_agent: Bool
@@ -307,7 +308,7 @@ class EmailTools:
         if ignore_case:
             email_pattern = re.compile(self.true_email, re.IGNORECASE)
         else:
-            email_pattern = re.compile(self.true_email, re.IGNORECASE)
+            email_pattern = re.compile(self.true_email)
 
         for email in emails_dirty:
 
