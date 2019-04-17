@@ -107,6 +107,12 @@ Use parameter "user_agent=True" to choose a random user agent to be used in the 
     >> email.extract_emails_from_web('lendico.com.br', user_agent=True)
     >> ['atendimento@lendico.com.br']
 
+As default, ignore case is enable, so emails like `Atentimento@lendico.com.br` will be matched.
+To disable it, is simple, pass the param `ignore_case=False`
+
+    >> email.extract_emails_from_web('http://nuitka.net/pages/impressum.html', user_agent=True, ignore_case=True)
+    >> ['Kay.Hayen@gmail.com']
+
  <br>
  
  You can use selenium (a webdriver that simulate you are using Google Chrome to access some page) to run and crawl web pages
